@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+}
+
+#helper  {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+
+#helper .camera {
+    display: flex;
+    flex-direction: column;
+}
+
+#controls {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+}
