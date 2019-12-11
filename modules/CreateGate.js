@@ -14,7 +14,7 @@ export default function CreateGate(settings, scene) {
     let gateTextureTop = textureLoader.load('../textures/finish-line01.jpg');
 
     // WrapTexture(gateTexture, 1, 5);
-    WrapTexture(gateTextureTop, 20, 2);
+    WrapTexture(gateTextureTop, 50, 2);
 
     // let gate_material = new THREE.MeshBasicMaterial({
     //     color: 0xf2f2f2,
