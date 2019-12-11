@@ -1,8 +1,9 @@
 import Shadow from '../utilities/Shadow.js';
 import CreateText from '/modules/CreateText.js';
+import UseLoader from '../utilities/UseLoader.js';
 
+export default function CreatePlayers(settings, scene, namesArray, player, carObject) {
 
-export default function CreatePlayers(settings, scene, player) {
     let geometry = new THREE.CubeGeometry(
         settings.playerDimension.width,
         settings.playerDimension.height,
@@ -12,22 +13,28 @@ export default function CreatePlayers(settings, scene, player) {
         color: 0xFBE538,
     });
 
-    let gapBetweenPlayers = settings.playerDimension.width * 2;
     let startPosX = -settings.road.width / 2 + 200;
+    let gapBetweenPlayers = 100;
 
     let playersPositionX = [];
     let playersPositionY = [];
 
     // let startPosX = -300;
 
-    for (let i = 0; i < player.length; i++) {
-        player[i].mesh = new THREE.Mesh(geometry, material);
-        player[i].mesh.position.set(
-            startPosX + (gapBetweenPlayers * i),
-            geometry.parameters.height / 2,
+    for (let i = 0; i < namesArray.length; i++) {
+        // Clone car object
+        let playerMesh = carObject.clone();
+        playerMesh.position.set(
+            startPosX + ( gapBetweenPlayers * i),
+            -12,
             0
         );
-        Shadow(player[i].mesh, true, true);
+
+        player.push({
+            name: namesArray[i].user,
+            mesh: playerMesh,
+        })
+
         scene.add(player[i].mesh);
 
         playersPositionX.push(startPosX + (gapBetweenPlayers * i));
@@ -35,6 +42,11 @@ export default function CreatePlayers(settings, scene, player) {
     }
 
     CreateText(scene, playersPositionX, playersPositionY)
+        console.log(player[i]);
+
+    }
+
+    console.log(player);
 
     return player;
 }

@@ -3,18 +3,20 @@ import CreateGate from './modules/CreateGate.js';
 import CreatePlayers from './modules/CreatePlayers.js';
 import CreateLights from './modules/CreateLights.js';
 import CreateRoad from './modules/CreateRoad.js';
-import CreateSky from './modules/CreateSky.js';
 // import CreateText from './modules/CreateText.js'; //TODO: delete later
+// import CreateSky from './modules/CreateSky.js';
+import DrawLogic from './modules/DrawLogic.js';
+// import GetData from './modules/GetData.js';
 
 // Utilities
 import WrapTexture from './utilities/WrapTexture.js';
 import Shadow from './utilities/Shadow.js';
+import UseLoader from './utilities/UseLoader.js';
 
 // Loader 
 import { OBJLoader2 } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/OBJLoader2.js';
 import { MTLLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/MTLLoader.js';
 import { MtlObjBridge } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/obj2/bridge/MtlObjBridge.js';
-
 
 let container,
     camera,
@@ -24,18 +26,24 @@ let container,
     lightHelper,
     shadowCameraHelper;
 
-let player = makePlayers(10);
+// let player = makePlayers(10);
+
+let namesArray;
+let player=[];
+
+let carObject;
+// let remainingPlayers = namesArray.length;
 
 let winner;
 
 let settings = {
     road: {
-        width: 1500,
+        width: 4600,
         height: 80,
         depth: 20000,
         color: 0xB2C0C7,
     },
-    finishPos: -1000,
+    finishPos: -3000,
     camera: {
         x: -900,
         y: 870,
@@ -61,6 +69,44 @@ let states = {
 }
 
 let textureLoader = new THREE.TextureLoader();
+
+
+// Get data
+fetch("leaderboard.json")
+    .then(
+        function (response) {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+
+            response.json().then(function (data) {
+                namesArray = data;
+                // console.log(namesArray);
+
+                // init after data ready && carOject ready
+                let timeInterval = setInterval(() => {
+                    if(carObject) {
+                        init();
+                        animate();
+                        clearInterval(timeInterval);
+                    } else{
+                        console.log('carObject not ready');
+                    }
+                }, 200);
+
+                return;
+            });
+        }
+    )
+    .catch(function (err) {
+        console.log('Fetch Error :-S', err);
+    });
+
+
+
+
 
 
 function cameraHelper() {
@@ -89,14 +135,17 @@ function cameraHelper() {
 function init() {
     container = document.getElementById("app");
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x413F42);
+
+    // Define scene Background Color
+    scene.background = new THREE.Color(0x3C6DB9);
+
 
     createCamera();
     createControls();
     CreateLights(settings, scene);
 
     // Static Objects
-    CreateSky(scene);
+    // CreateSky(scene);
     CreateRoad(settings, scene);
     CreateGate(settings, scene);
 
@@ -104,7 +153,7 @@ function init() {
     // CreateText(settings, scene); 
 
     // Player
-    player = CreatePlayers(settings, scene, player);
+    player = CreatePlayers(settings, scene, namesArray, player, carObject);
 
     // Renderer
     createRenderer();
@@ -119,6 +168,7 @@ function createRenderer() {
 
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+
     // renderer.gammaFactor = 2.2;
     // renderer.gammaOutput = true;
     // renderer.physicallyCorrectLights = true;
@@ -260,71 +310,61 @@ function update() {
     // Helper
     // lightHelper.update();
     // shadowCameraHelper.update();
+
+    // console.log(namesObject);
+
     renderer.render(scene, camera);
 }
 
-init();
-animate();
-cameraHelper();
+// init();
+// animate();
+// cameraHelper();
 
 // Binding
 bindEvents();
 bindData();
 
+let carArray = [];
+let gapBetweenPlayers = 60;
 
 
 
-// 3D loader
-// instantiate a loader
-// var loader = new OBJLoader2();
 
-// // load a resource
-// loader.load(
-// 	// resource URL
-// 	'models/Low_Poly_City_Cars.obj',
-// 	// called when resource is loaded
-// 	function ( object ) {
 
-// 		scene.add( object );
+// function makeCars(root) {
+//     for (let i = 0; i < 40; i++) {
+//         let car = root.clone();
+//         carArray.push(car);
+//         carArray[i].position.x = gapBetweenPlayers * i;
+//         carArray[i].position.z = -20 * i;
+//         scene.add(car);
+//     }
+// };
 
-// 	},
-// 	// called when loading is in progresses
-// 	function ( xhr ) {
-
-// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
-// 	},
-// 	// called when loading has errors
-// 	function ( error ) {
-
-// 		console.log( 'An error happened' );
-
-// 	}
-// );
 
 
 function loader() {
     const mtlLoader = new MTLLoader();
-    mtlLoader.load('models/Low_Poly_City_Cars.mtl', (mtlParseResult) => {
+    mtlLoader.load('models/Low-Poly-Racing-Car.mtl', (mtlParseResult) => {
         const objLoader = new OBJLoader2();
         const materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
         objLoader.addMaterials(materials);
-        objLoader.load('models/Low_Poly_City_Cars.obj', (root) => {
-            root.position.y = 9;
-            root.rotation.y = Math.PI / 2;
-
+        objLoader.load('models/Low-Poly-Racing-Car.obj', (root) => {
+            root.position.y = -10;
+            root.rotation.y = Math.PI / 8;
+            root.scale.set(0.5, 0.5, 0.5);
             // Set shadow to true
             // Shadow(root, true, true);
             Shadow(root.children[0], true, true);
-            console.log(root);
-
-            let root2 = root.clone();
-            root2.position.x = 500;
-            scene.add(root);
-            // scene.add(root2);
+            // console.log(root);
+            carObject = root;
+            // scene.add(root);
+            // makeCars(root);
         });
     });
 
 }
 
+
 loader();
+
