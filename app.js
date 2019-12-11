@@ -4,6 +4,7 @@ import CreatePlayers from './modules/CreatePlayers.js';
 import CreateLights from './modules/CreateLights.js';
 import CreateRoad from './modules/CreateRoad.js';
 import CreateSky from './modules/CreateSky.js';
+// import CreateText from './modules/CreateText.js'; //TODO: delete later
 
 // Utilities
 import WrapTexture from './utilities/WrapTexture.js';
@@ -15,7 +16,6 @@ import { MTLLoader } from 'https://threejsfundamentals.org/threejs/resources/thr
 import { MtlObjBridge } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/obj2/bridge/MtlObjBridge.js';
 
 
-
 let container,
     camera,
     scene,
@@ -24,7 +24,7 @@ let container,
     lightHelper,
     shadowCameraHelper;
 
-let player = makePlayers(40);
+let player = makePlayers(10);
 
 let winner;
 
@@ -100,8 +100,11 @@ function init() {
     CreateRoad(settings, scene);
     CreateGate(settings, scene);
 
+    //Text TODO:add this to player
+    // CreateText(settings, scene); 
+
     // Player
-    // player = CreatePlayers(settings, scene, player);
+    player = CreatePlayers(settings, scene, player);
 
     // Renderer
     createRenderer();

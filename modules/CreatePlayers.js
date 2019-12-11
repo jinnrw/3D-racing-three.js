@@ -1,4 +1,6 @@
 import Shadow from '../utilities/Shadow.js';
+import CreateText from '/modules/CreateText.js';
+
 
 export default function CreatePlayers(settings, scene, player) {
     let geometry = new THREE.CubeGeometry(
@@ -13,6 +15,9 @@ export default function CreatePlayers(settings, scene, player) {
     let gapBetweenPlayers = settings.playerDimension.width * 2;
     let startPosX = -settings.road.width / 2 + 200;
 
+    let playersPositionX = [];
+    let playersPositionY = [];
+
     // let startPosX = -300;
 
     for (let i = 0; i < player.length; i++) {
@@ -24,7 +29,12 @@ export default function CreatePlayers(settings, scene, player) {
         );
         Shadow(player[i].mesh, true, true);
         scene.add(player[i].mesh);
+
+        playersPositionX.push(startPosX + (gapBetweenPlayers * i));
+        playersPositionY.push(geometry.parameters.height / 2); 
     }
+
+    CreateText(scene, playersPositionX, playersPositionY)
 
     return player;
 }
