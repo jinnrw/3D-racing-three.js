@@ -28,10 +28,11 @@ export default function CreatePlayers(settings, scene, namesArray, player, carOb
         player.push({
             name: namesArray[i].user,
             mesh: playerMesh,
+            eliminated: false
         })
 
         scene.add(player[i].mesh);
-        console.log(player[i]);
+        // console.log(player[i]);
 
     }
 

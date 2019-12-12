@@ -1,28 +1,38 @@
-export default function DrawLogic(namesArray) {
+export default function DrawLogic(nominationsArray, player) {
     console.log('Drawing');
 
-    var speed = 50;
-    var namesLength = namesArray.length;
+    var speed = 10;
+    // if (nominationsArray.length <= 3) {
+    //     speed = 4800;
+    // } else if (nominationsArray.length <= 5) {
+    //     speed = 2000;
+    // } else if (nominationsArray.length <= 10) {
+    //     speed = 1250;
+    // } else if (nominationsArray.length <= 20) {
+    //     speed = 500;
+    // }
 
-    if (namesArray.length <= 3) {
-        speed = 4800;
-    } else if (namesArray.length <= 5) {
-        speed = 2000;
-    } else if (namesArray.length <= 10) {
-        speed = 1250;
-    } else if (namesArray.length <= 20) {
-        speed = 500;
-    }
-
-    if (namesLength > 1) {
         setTimeout((speed) => {
+            let index = Math.floor(Math.random() * nominationsArray.length);
+            let drawnName = nominationsArray[index]
 
-            let index = Math.floor(Math.random() * namesLength);
+            nominationsArray.splice(index, 1);
+            // Check elimination
+            if (!nominationsArray.includes(drawnName)) {
+                console.log(drawnName);
+                
+                for (let i = 0; i < player.length; i++) {
+                    if (player[i].name === drawnName) {
+                        player[i].eliminated = true;
+                    }
+                }
+            }
 
-            namesArray.splice(index, 1);
             this.Drawlogic(); // Loop Drawlogic func
         }, speed);
-    }
 
-    return namesArray;
+        // console.log(nominationsArrayLength);
+        
+
+    return nominationsArray;
 }

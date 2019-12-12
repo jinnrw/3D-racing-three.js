@@ -8,8 +8,8 @@ export default function CreateLights(settings, scene) {
     );
     scene.add(ambientLight);
 
-    const light = new THREE.SpotLight(0x202020, 3);
-    light.position.set(-200, 1000, 300);
+    const light = new THREE.SpotLight(0x202020, 5);
+    light.position.set(0, 1000, 300);
     light.distance = 2000;
 
     const d = 100;
