@@ -17,9 +17,11 @@ export default function CreatePlayers(settings, scene, namesArray, player, carOb
     let gapBetweenPlayers = 100;
 
     let playersPositionX = [];
-    let playersPositionY = [];
 
     // let startPosX = -300;
+    // CreateText(scene, playersPositionX, namesArray);
+    // CreateText(playersPositionX, player);
+    // console.log(texts);
 
     for (let i = 0; i < namesArray.length; i++) {
         // Clone car object
@@ -33,18 +35,15 @@ export default function CreatePlayers(settings, scene, namesArray, player, carOb
         player.push({
             name: namesArray[i].user,
             mesh: playerMesh,
+            // text: texts[i],
         })
 
         scene.add(player[i].mesh);
 
-        playersPositionX.push(startPosX + (gapBetweenPlayers * i));
-        playersPositionY.push(geometry.parameters.height / 2); 
+        playersPositionX.push(startPosX + ( gapBetweenPlayers * i));
     }
 
-    CreateText(scene, playersPositionX, playersPositionY)
-        console.log(player[i]);
-
-    }
+    
 
     console.log(player);
 

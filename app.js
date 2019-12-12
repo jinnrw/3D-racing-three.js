@@ -3,7 +3,7 @@ import CreateGate from './modules/CreateGate.js';
 import CreatePlayers from './modules/CreatePlayers.js';
 import CreateLights from './modules/CreateLights.js';
 import CreateRoad from './modules/CreateRoad.js';
-// import CreateText from './modules/CreateText.js'; //TODO: delete later
+import CreateText from './modules/CreateText.js'; //TODO: delete later
 // import CreateSky from './modules/CreateSky.js';
 import DrawLogic from './modules/DrawLogic.js';
 // import GetData from './modules/GetData.js';
@@ -30,6 +30,7 @@ let container,
 
 let namesArray;
 let player=[];
+let texts = [];
 
 let carObject;
 // let remainingPlayers = namesArray.length;
@@ -155,6 +156,8 @@ function init() {
     // Player
     player = CreatePlayers(settings, scene, namesArray, player, carObject);
 
+    texts = CreateText(scene, namesArray, player);
+
     // Renderer
     createRenderer();
 }
@@ -223,6 +226,7 @@ function move() {
         for (let i = 0; i < player.length; i++) {
             if (player[i].mesh.position.z >= settings.finishPos) {
                 player[i].mesh.position.z -= 5;
+                texts[i].position.z -= 5;
             } else { // trigger win state
                 setWinner(player[0].mesh);
             }
