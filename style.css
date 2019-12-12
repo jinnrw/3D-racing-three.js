@@ -23,3 +23,15 @@ body {
     top: 50px;
     left: 50px;
 }
+
+#winner-container {
+    position: fixed;
+    top: 50px;
+    width: 100vw;
+    height: 200px;
+    display: none;
+    justify-content: center;
+    font-size: 40px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;[]
+}
+
