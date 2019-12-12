@@ -3,7 +3,7 @@ import CreateGate from './modules/CreateGate.js';
 import CreatePlayers from './modules/CreatePlayers.js';
 import CreateLights from './modules/CreateLights.js';
 import CreateRoad from './modules/CreateRoad.js';
-import CreateText from './modules/CreateText.js'; //TODO: delete later
+import CreateText from './modules/CreateText.js'; 
 // import CreateSky from './modules/CreateSky.js';
 import DrawLogic from './modules/DrawLogic.js';
 // import GetData from './modules/GetData.js';
@@ -172,13 +172,11 @@ function init() {
     CreateRoad(settings, scene);
     CreateGate(settings, scene);
 
-    //Text TODO:add this to player
-    // CreateText(settings, scene); 
-
     // Player
     player = CreatePlayers(settings, scene, namesArray, player, carObject);
-
-    texts = CreateText(scene, namesArray, player);
+    
+    //Texts
+    texts = CreateText(scene, player);
 
     // Renderer
     createRenderer();
@@ -308,7 +306,7 @@ function move() {
 
             if (!player[i].eliminated) {
                 player[i].mesh.position.z -= 2;
-                texts[i].position.z -= 5;
+                texts[i].position.z -= 2;
             } else {
                 // Set winner
                 // player[i].mesh.position.z;
