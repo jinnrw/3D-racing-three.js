@@ -31,28 +31,29 @@ let container,
 let namesArray;
 let player=[];
 let texts = [];
-
 let carObject;
+let nominationsArray = [];
+
 // let remainingPlayers = namesArray.length;
 
 let winner;
 
 let settings = {
     road: {
-        width: 4600,
+        width: 4500,
         height: 80,
-        depth: 20000,
+        depth: 4000,
         color: 0xB2C0C7,
     },
     finishPos: -3000,
     camera: {
-        x: -900,
-        y: 870,
-        z: 450,
+        x: 0,
+        y: 1700,
+        z: 1000,
         lookAt: {
             x: 0,
             y: 0,
-            z: 0
+            z: -500
         }
     },
     gravity: -0.8,
@@ -64,6 +65,7 @@ let settings = {
 }
 
 let states = {
+    isReadyToStart: false,
     isStarted: false,
     hasWinner: false,
     end: false,
@@ -88,11 +90,11 @@ fetch("leaderboard.json")
 
                 // init after data ready && carOject ready
                 let timeInterval = setInterval(() => {
-                    if(carObject) {
+                    if (carObject) {
                         init();
                         animate();
                         clearInterval(timeInterval);
-                    } else{
+                    } else {
                         console.log('carObject not ready');
                     }
                 }, 200);
@@ -105,7 +107,27 @@ fetch("leaderboard.json")
         console.log('Fetch Error :-S', err);
     });
 
+// Get data: Nominations
+fetch("nominations.json")
+    .then(
+        function (response) {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
 
+            response.json().then(function (data) {
+                nominationsArray = data;
+                // Set state
+                states.isReadyToStart = true;
+                return;
+            });
+        }
+    )
+    .catch(function (err) {
+        console.log('Fetch Error :-S', err);
+    });
 
 
 
@@ -160,6 +182,9 @@ function init() {
 
     // Renderer
     createRenderer();
+
+    // Update camera loat at
+    updateCameraLooAt();
 }
 
 function createRenderer() {
@@ -192,19 +217,24 @@ function createCamera() {
         60, //fov
         window.innerWidth / window.innerHeight, //aspect
         1, // near clipping plane
-        10000 // far clipping plane
+        12000 // far clipping plane
     );
     camera.position.set(
         settings.camera.x,
         settings.camera.y,
         settings.camera.z
     );
-    camera.lookAt(
-        settings.camera.lookAt.x,
-        settings.camera.lookAt.y,
-        settings.camera.lookAt.z
-    );
+
+    // camera.lookAt(
+    //     settings.camera.lookAt.x,
+    //     settings.camera.lookAt.y,
+    //     settings.camera.lookAt.z
+    // );
     scene.add(camera);
+
+
+    // console.log(settings.camera.lookAt.z);
+
 }
 
 function updateCamera() {
@@ -213,6 +243,7 @@ function updateCamera() {
         settings.camera.y,
         settings.camera.z
     );
+
     camera.lookAt(
         settings.camera.lookAt.x,
         settings.camera.lookAt.y,
@@ -220,17 +251,70 @@ function updateCamera() {
     );
 }
 
-//  Animations
+function updateCameraLooAt() {
+    camera.lookAt(
+        settings.camera.lookAt.x,
+        settings.camera.lookAt.y,
+        settings.camera.lookAt.z
+    );
+}
+
+//  Start button
 function move() {
     if (states.isStarted) {
+        let speed = 5;
+
+        if (nominationsArray.length <= 3) {
+            speed = 4800;
+        } else if (nominationsArray.length <= 5) {
+            speed = 2000;
+        } else if (nominationsArray.length <= 10) {
+            speed = 1250;
+        } else if (nominationsArray.length <= 20) {
+            speed = 500;
+        }
+
+        // Start draw logic
+        if (nominationsArray.length > 1) {
+
+            setTimeout((speed) => {
+                let index = Math.floor(Math.random() * nominationsArray.length);
+                let drawnName = nominationsArray[index];
+
+                // Remove one value from array
+                nominationsArray.splice(index, 1);
+
+                // Check elimination
+                if (!nominationsArray.includes(drawnName)) {
+                    console.log("Out: "+drawnName);
+
+                    for (let i = 0; i < player.length; i++) {
+                        if (player[i].name === drawnName) {
+                            player[i].eliminated = true;
+                        }
+                    }
+                }
+            }, speed);
+
+            console.log(nominationsArray.length);
+
+        } else if(nominationsArray.length === 1){
+            console.log(nominationsArray);
+            // Set winner
+            setWinner();
+        }
+
         for (let i = 0; i < player.length; i++) {
-            if (player[i].mesh.position.z >= settings.finishPos) {
-                player[i].mesh.position.z -= 5;
+
+            if (!player[i].eliminated) {
+                player[i].mesh.position.z -= 2;
                 texts[i].position.z -= 5;
-            } else { // trigger win state
-                setWinner(player[0].mesh);
+            } else {
+                // Set winner
+                // player[i].mesh.position.z;
             }
         }
+
 
         cameraMove();
     }
@@ -258,13 +342,22 @@ function winnerAnimation() {
 
 }
 
-function setWinner(player) {
+function setWinner() {
     if (!states.hasWinner) {
         states.hasWinner = true;
         states.isStarted = false;
         // Asign winner
-        winner = player;
-        winnerAnimation();
+        for (let i = 0; i < player.length; i++) {
+            if (!player[i].eliminated) {
+                winner = player[i]
+                console.log("All: ");
+                console.log(player);
+
+                console.log("winner is: ");
+                console.log(winner);
+            }
+        }
+        // winnerAnimation();
     }
 
 }
@@ -272,7 +365,7 @@ function setWinner(player) {
 function cameraMove() {
     // camera.lookAt(player.position.x, player.position.y, player.position.z);
     // camera.position.z = player[0].mesh.position.z + 500;
-    camera.position.z -= 5;
+    camera.position.z -= 2;
 
 }
 
@@ -290,7 +383,10 @@ function makePlayers(length) {
 // Event Binding
 function bindEvents() {
     document.getElementById("start").onclick = function () {
-        states.isStarted = true;
+
+        if (states.isReadyToStart) {
+            states.isStarted = true;
+        }
     }
 }
 
@@ -311,6 +407,7 @@ function update() {
     move();
     // cameraMove();
 
+
     // Helper
     // lightHelper.update();
     // shadowCameraHelper.update();
@@ -322,7 +419,7 @@ function update() {
 
 // init();
 // animate();
-// cameraHelper();
+cameraHelper();
 
 // Binding
 bindEvents();
@@ -358,7 +455,7 @@ function loader() {
             root.rotation.y = Math.PI / 8;
             root.scale.set(0.5, 0.5, 0.5);
             // Set shadow to true
-            // Shadow(root, true, true);
+            Shadow(root, true, true);
             Shadow(root.children[0], true, true);
             // console.log(root);
             carObject = root;

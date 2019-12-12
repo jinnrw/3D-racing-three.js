@@ -11,7 +11,7 @@ export default function CreateGate(settings, scene) {
 
     let textureLoader = new THREE.TextureLoader();
     // let gateTexture = textureLoader.load('../textures/gate.png');
-    let gateTextureTop = textureLoader.load('../textures/finish-line01.jpg');
+    let gateTextureTop = textureLoader.load('textures/finish-line01.jpg');
 
     // WrapTexture(gateTexture, 1, 5);
     WrapTexture(gateTextureTop, 50, 2);
