@@ -66,6 +66,7 @@ let settings = {
 let states = {
     isReadyToStart: false,
     isStarted: false,
+    isDrawing: false,
     hasWinner: false,
     end: false,
 }
@@ -120,6 +121,8 @@ fetch("nominations.json")
                 nominationsArray = data;
                 // Set state
                 states.isReadyToStart = true;
+                console.log('is ready: ' + states.isReadyToStart);
+
                 return;
             });
         }
@@ -256,48 +259,9 @@ function updateCameraLooAt() {
 //  Start button
 function move() {
     if (states.isStarted) {
-        let speed = 5;
+        cameraMove();
 
-        if (nominationsArray.length <= 3) {
-            speed = 4800;
-        } else if (nominationsArray.length <= 5) {
-            speed = 2000;
-        } else if (nominationsArray.length <= 10) {
-            speed = 1250;
-        } else if (nominationsArray.length <= 20) {
-            speed = 500;
-        }
-
-        // Start draw logic
-        if (nominationsArray.length > 1) {
-
-            setTimeout((speed) => {
-                let index = Math.floor(Math.random() * nominationsArray.length);
-                let drawnName = nominationsArray[index];
-
-                // Remove one value from array
-                nominationsArray.splice(index, 1);
-
-                // Check elimination
-                if (!nominationsArray.includes(drawnName)) {
-                    console.log("Out: "+drawnName);
-
-                    for (let i = 0; i < player.length; i++) {
-                        if (player[i].name === drawnName) {
-                            player[i].eliminated = true;
-                        }
-                    }
-                }
-            }, speed);
-
-            console.log(nominationsArray.length);
-
-        } else if(nominationsArray.length === 1){
-            console.log(nominationsArray);
-            // Set winner
-            setWinner();
-        }
-
+        // update player position
         for (let i = 0; i < player.length; i++) {
             if (!player[i].eliminated) {
                 player[i].mesh.position.z -= 2;
@@ -306,23 +270,74 @@ function move() {
                 // player[i].mesh.position.z;
             }
         }
-
-
-        cameraMove();
     }
+
+    if (states.isStarted && !states.isDrawing) {
+        drawLogic();
+    }
+}
+
+function drawLogic() {
+    states.isDrawing = true;
+    var drawSpeed = 5;
+
+    if (nominationsArray.length <= 3) {
+        drawSpeed = 4800;
+    } else if (nominationsArray.length <= 5) {
+        drawSpeed = 2000;
+    } else if (nominationsArray.length <= 10) {
+        drawSpeed = 1250;
+    } else if (nominationsArray.length <= 30) {
+        drawSpeed = 500;
+    }
+
+    // repeat
+    setTimeout(() => {
+        if (!states.hasWinner) {
+            // Start draw logic
+            if (nominationsArray.length > 1) {
+                let index = Math.floor(Math.random() * nominationsArray.length);
+                let drawnName = nominationsArray[index];
+
+                // Remove one value from array
+                nominationsArray.splice(index, 1);
+
+                // Check elimination
+                if (!nominationsArray.includes(drawnName)) {
+                    console.log("Out: " + drawnName);
+
+                    for (let i = 0; i < player.length; i++) {
+                        if (player[i].name === drawnName) {
+                            player[i].eliminated = true;
+                        }
+                    }
+                }
+                console.log(nominationsArray.length);
+                drawLogic();
+            } else if (nominationsArray.length === 1) {
+                console.log(nominationsArray);
+                // Set winner
+                setWinner();
+            }
+        } else {
+            clearInterval(intervalId);
+            console.log('clear interval ' + intervalId);
+        }
+    }, drawSpeed);
 }
 
 function winnerAnimation() {
     // var delta = Math.PI / 2;
     let velocity = 12;
+    winner.mesh.scale.set(5,5,5);
     var timeId = setInterval(() => {
         velocity += settings.gravity;
-        winner.position.y += velocity;
+        winner.mesh.position.y += velocity;
         // winner.rotation.x -= delta;
 
         // Touch the road
-        if (winner.position.y <= settings.playerDimension.height / 2) {
-            winner.position.y = settings.playerDimension.height / 2;
+        if (winner.mesh.position.y <= settings.playerDimension.height / 2) {
+            winner.mesh.position.y = settings.playerDimension.height / 2;
         }
         //console.log(winner.position.y);
     }, 1000 / 60);
@@ -349,9 +364,10 @@ function setWinner() {
                 console.log(winner);
             }
         }
-        // winnerAnimation();
+        winnerAnimation();
+        document.getElementById("winner-container").style.display = "flex";
+        document.getElementById("winner").innerHTML = `Winner is ${winner.name}!`;
     }
-
 }
 
 function cameraMove() {
