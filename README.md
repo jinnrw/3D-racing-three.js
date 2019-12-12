@@ -16,7 +16,7 @@ A 3D racing game in a web browser, using Three.js, a WebGL library.
 ### To do:
 - [x] Make one car obj for duplication, instead of a group of cars
 - [x] Integrate the logic to select a winner 
-- [x] Player winner animation
+- [x] Winner animation
 - [x] Camera movement, follows players
 - [ ] Player names display
 - [ ] Player elimination animation
