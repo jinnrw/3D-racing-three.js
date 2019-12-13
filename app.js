@@ -29,9 +29,16 @@ let container,
 // let player = makePlayers(10);
 
 let namesArray;
+<<<<<<< HEAD
 let player=[];
 let texts = [];
 let carObject;
+=======
+let player = [];
+
+let carObject={};
+
+>>>>>>> master
 let nominationsArray = [];
 
 // let remainingPlayers = namesArray.length;
@@ -42,10 +49,10 @@ let settings = {
     road: {
         width: 4500,
         height: 80,
-        depth: 4000,
+        depth: 5000,
         color: 0xB2C0C7,
     },
-    finishPos: -3000,
+    finishPos: -4000,
     camera: {
         x: 0,
         y: 1700,
@@ -291,7 +298,7 @@ function drawLogic() {
     } else if (nominationsArray.length <= 5) {
         drawSpeed = 2000;
     } else if (nominationsArray.length <= 10) {
-        drawSpeed = 1250;
+        drawSpeed = 10;
     } else if (nominationsArray.length <= 30) {
         drawSpeed = 500;
     }
@@ -459,24 +466,28 @@ let gapBetweenPlayers = 60;
 
 function loader() {
     const mtlLoader = new MTLLoader();
-    mtlLoader.load('models/Low-Poly-Racing-Car.mtl', (mtlParseResult) => {
-        const objLoader = new OBJLoader2();
-        const materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
-        objLoader.addMaterials(materials);
-        objLoader.load('models/Low-Poly-Racing-Car.obj', (root) => {
-            root.position.y = -10;
-            root.rotation.y = Math.PI / 8;
-            root.scale.set(0.5, 0.5, 0.5);
-            // Set shadow to true
-            Shadow(root, true, true);
-            Shadow(root.children[0], true, true);
-            // console.log(root);
-            carObject = root;
-            // scene.add(root);
-            // makeCars(root);
-        });
-    });
 
+    for (let i = 0; i < 3; i++) {
+        mtlLoader.load(`
+        models/Low-Poly-Racing-Car-${i}.mtl
+        `, (mtlParseResult) => {
+            const objLoader = new OBJLoader2();
+            const materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
+            objLoader.addMaterials(materials);
+            objLoader.load('models/Low-Poly-Racing-Car.obj', (root) => {
+                root.position.y = -10;
+                root.rotation.y = Math.PI / 8;
+                root.scale.set(0.5, 0.5, 0.5);
+                // Set shadow to true
+                Shadow(root, true, true);
+                Shadow(root.children[0], true, true);
+                carObject[i] = root;
+            });
+        });
+    }
+
+    // console.log(carObject);
+    
 }
 
 

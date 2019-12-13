@@ -16,18 +16,29 @@ export default function CreatePlayers(settings, scene, namesArray, player, carOb
     let startPosX = -settings.road.width / 2 + 200;
     let gapBetweenPlayers = 100;
 
-    let playersPositionX = [];
-
-    // let startPosX = -300;
-    // CreateText(scene, playersPositionX, namesArray);
-    // CreateText(playersPositionX, player);
-    // console.log(texts);
+    console.log(carObject);
+    // console.log(carObject[0]);
+    // console.log(carObject[5]);
 
     for (let i = 0; i < namesArray.length; i++) {
-        // Clone car object
-        let playerMesh = carObject.clone();
+
+        let playerMesh;
+        let randomIndex = Math.floor(Math.random() * 3);  // return 0 to 2
+
+        playerMesh = carObject[randomIndex].clone();
+
+        // if (i > 10) {
+        //     // Clone car object
+        //     playerMesh = carObject[2].clone();
+        // } else if (i > 5) {
+        //     // Clone car object
+        //     playerMesh = carObject[1].clone();
+        // } else {
+        //     playerMesh = carObject[0].clone();
+        // }
+
         playerMesh.position.set(
-            startPosX + ( gapBetweenPlayers * i),
+            startPosX + (gapBetweenPlayers * i),
             -12,
             0
         );
