@@ -4,7 +4,7 @@ export default function CreateText(scene, player) {
 
     loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
 
-        let material = new THREE.MeshPhongMaterial({color:0x000000});
+        let material = new THREE.MeshBasicMaterial({color:0x000000});
 
         for (let i = 0; i < player.length; i++) {
             let geometry = new THREE.TextGeometry( player[i].name, {
