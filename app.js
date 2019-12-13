@@ -269,6 +269,7 @@ function move() {
         for (let i = 0; i < player.length; i++) {
             if (!player[i].eliminated) {
                 player[i].mesh.position.z -= 2;
+                texts[i].position.z -= 2;
             } else {
                 // Set winner
                 // player[i].mesh.position.z;
