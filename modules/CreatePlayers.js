@@ -1,7 +1,3 @@
-import Shadow from '../utilities/Shadow.js';
-import CreateText from './modules/CreateText.js';
-import UseLoader from '../utilities/UseLoader.js';
-
 export default function CreatePlayers(settings, scene, namesArray, player, carObject) {
 
     let geometry = new THREE.CubeGeometry(
