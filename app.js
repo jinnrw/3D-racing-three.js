@@ -29,16 +29,9 @@ let container,
 // let player = makePlayers(10);
 
 let namesArray;
-<<<<<<< HEAD
 let player=[];
 let texts = [];
-let carObject;
-=======
-let player = [];
-
 let carObject={};
-
->>>>>>> master
 let nominationsArray = [];
 
 // let remainingPlayers = namesArray.length;

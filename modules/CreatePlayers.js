@@ -50,8 +50,6 @@ export default function CreatePlayers(settings, scene, namesArray, player, carOb
         })
 
         scene.add(player[i].mesh);
-
-        playersPositionX.push(startPosX + ( gapBetweenPlayers * i));
     }
 
     
