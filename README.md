@@ -18,7 +18,7 @@ A 3D racing game in a web browser, using Three.js, a WebGL library.
 - [x] Integrate the logic to select a winner 
 - [x] Winner animation
 - [x] Camera movement, follows players
-- [ ] Player names display
+- [x] Player names display
 - [ ] Player elimination animation
 - [ ] Art decorations, i.e. trees, pavement, sky
 
