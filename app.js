@@ -3,6 +3,7 @@ import CreateGate from './modules/CreateGate.js';
 import CreatePlayers from './modules/CreatePlayers.js';
 import CreateLights from './modules/CreateLights.js';
 import CreateRoad from './modules/CreateRoad.js';
+import CreateText from './modules/CreateText.js'; 
 // import CreateSky from './modules/CreateSky.js';
 import DrawLogic from './modules/DrawLogic.js';
 // import GetData from './modules/GetData.js';
@@ -25,12 +26,12 @@ let container,
     lightHelper,
     shadowCameraHelper;
 
+// let player = makePlayers(10);
 
 let namesArray;
-let player = [];
-
+let player=[];
+let texts = [];
 let carObject={};
-
 let nominationsArray = [];
 
 // let remainingPlayers = namesArray.length;
@@ -176,6 +177,9 @@ function init() {
 
     // Player
     player = CreatePlayers(settings, scene, namesArray, player, carObject);
+    
+    //Texts
+    texts = CreateText(scene, player);
 
     // Renderer
     createRenderer();
@@ -265,6 +269,7 @@ function move() {
         for (let i = 0; i < player.length; i++) {
             if (!player[i].eliminated) {
                 player[i].mesh.position.z -= 2;
+                texts[i].position.z -= 2;
             } else {
                 // Set winner
                 // player[i].mesh.position.z;
