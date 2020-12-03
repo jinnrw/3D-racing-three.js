@@ -2,7 +2,7 @@
 
 A 3D racing game in a web browser, using Three.js, a WebGL library.
 
-# Dependencies
+### Dependencies
 - Three.js
 - OrbitControls.js
 - OBJLoader2.js (load 3D objects)
