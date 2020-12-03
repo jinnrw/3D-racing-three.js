@@ -1,0 +1,41 @@
+{
+  "name": "3D-racing-three.js",
+  "version": "1.0.0",
+  "description": "A 3D racing game in a web browser, using Three.js, a WebGL library.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel index.html --no-cache",
+    "build": "parcel build index.html --no-cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinnrw/3D-racing-three.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jinnrw/3D-racing-three.js/issues"
+  },
+  "homepage": "https://github.com/jinnrw/3D-racing-three.js#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0"
+  },
+  "dependencies": {
+    "three": "^0.123.0"
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "static",
+        "staticOutDir": "static"
+      },
+      {
+        "staticPath": "fonts",
+        "staticOutDir": "fonts"
+      }
+    ]
+  }
+}

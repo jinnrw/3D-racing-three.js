@@ -1,4 +1,5 @@
 import Shadow from '../utilities/Shadow.js';
+import * as THREE from "three";
 
 export default function CreateLights(settings, scene) {
     const ambientLight = new THREE.HemisphereLight(

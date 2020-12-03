@@ -1,5 +1,6 @@
-import WrapTexture from '../utilities/WrapTexture.js';
+// import WrapTexture from '../utilities/WrapTexture.js';
 import Shadow from '../utilities/Shadow.js';
+import * as THREE from "three";
 
 export default function CreateRoad(settings, scene) {
     let road_geo = new THREE.CubeGeometry(

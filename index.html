@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <link href="./style.css" rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.js"></script>
-    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div id="winner-container">
-        <div id="winner"></div>
+      <div id="winner"></div>
     </div>
     <div id="app"></div>
     <div id="helper">
-        <div class="camera">
-            <div id="cameraX">
-                <input id="" type="range" name="cameraX" min="-1500" max="1500" value="">
-                <span></span>
-            </div>
-            <div id="cameraY">
-                <input id="" type="range" name="cameraX" min="0" max="3000" value="">
-                <span></span>
-            </div>
-            <div id="cameraZ">
-                <input id="" type="range" name="cameraX" min="-1500" max="3000" value="">
-                <span></span>
-            </div>
+      <div class="camera">
+        <div id="cameraX">
+          <input
+            id=""
+            type="range"
+            name="cameraX"
+            min="-1500"
+            max="1500"
+            value=""
+          />
+          <span></span>
         </div>
+        <div id="cameraY">
+          <input
+            id=""
+            type="range"
+            name="cameraX"
+            min="0"
+            max="3000"
+            value=""
+          />
+          <span></span>
+        </div>
+        <div id="cameraZ">
+          <input
+            id=""
+            type="range"
+            name="cameraX"
+            min="-1500"
+            max="3000"
+            value=""
+          />
+          <span></span>
+        </div>
+      </div>
     </div>
     <div id="controls">
-        <button id="start">Start</button>
+      <button id="start">Start</button>
     </div>
-
-    <!-- Get json -->
-    <script type="application/json" src="leaderboard.json"></script>
-    <script type="application/json" src="nominations.json"></script>
     <!-- app.js -->
     <script src="./app.js" type="module"></script>
-</body>
-
+  </body>
 </html>

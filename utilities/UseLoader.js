@@ -1,7 +1,7 @@
 // Loader 
-import { OBJLoader2 } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/OBJLoader2.js';
-import { MTLLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/MTLLoader.js';
-import { MtlObjBridge } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/loaders/obj2/bridge/MtlObjBridge.js';
+import { OBJLoader2 } from 'three/examples/jsm/loaders/OBJLoader2.js';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
+import { MtlObjBridge } from 'three/examples/jsm/loaders/obj2/bridge/MtlObjBridge.js';
 
 import Shadow from '../utilities/Shadow.js';
 

@@ -1,4 +1,5 @@
-import WrapTexture from '../utilities/WrapTexture.js';
+// import WrapTexture from '../utilities/WrapTexture.js';
+import * as THREE from "three";
 
 export default function CreateGate(settings, scene) {
     let gateHeight = 200;
@@ -11,10 +12,13 @@ export default function CreateGate(settings, scene) {
 
     let textureLoader = new THREE.TextureLoader();
     // let gateTexture = textureLoader.load('../textures/gate.png');
-    let gateTextureTop = textureLoader.load('textures/finish-line01.jpg');
+    let gateTextureTop = textureLoader.load('static/finish-line01.jpg');
 
     // WrapTexture(gateTexture, 1, 5);
-    WrapTexture(gateTextureTop, 50, 1);
+    gateTextureTop.wrapS = THREE.RepeatWrapping;
+    gateTextureTop.wrapT = THREE.RepeatWrapping;
+    gateTextureTop.repeat.x = 50;
+    gateTextureTop.repeat.y = 1;
 
     // let gate_material = new THREE.MeshBasicMaterial({
     //     color: 0xf2f2f2,

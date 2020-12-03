@@ -1,4 +1,5 @@
 // Use if need to create a sky map
+import * as THREE from "three";
 
 export default function CreateSky(scene) {
     let geometry = new THREE.CubeGeometry(
