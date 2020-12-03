@@ -31,6 +31,7 @@ A 3D racing game in a web browser, using Three.js, a WebGL library.
 - [ ] Player elimination animation
 - [ ] Art decorations, i.e. trees, pavement, sky
 
+### Demo
 Here's the [demo](https://3d-racing-three-js.vercel.app/).
 
 To see this project locally, please run:
