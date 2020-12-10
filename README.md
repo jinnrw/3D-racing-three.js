@@ -33,7 +33,9 @@ Only one player can make it to the finish line with a randomized elimination log
 - [ ] Art decorations, i.e. trees, pavement, sky
 
 ### Demo
-Here's the [demo](https://3d-racing-three-js.vercel.app/).
+Here's the [demo](https://3d-racing-three-js.vercel.app/).  
+- Use mouse left-click to do camera rotation
+- Use mouse right-click to pan view
 
 To see this project locally, please run:
 `npm run dev` or `parcel index.html --no-cache`
