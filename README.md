@@ -1,6 +1,6 @@
 # 3D-racing-three.js
 
-A 3D racing game in a web browser, using Three.js, a WebGL library. 
+A 3D racing game in a web browser, using Three.js, a WebGL library.  
 Only one player can make it to the finish line with a randomized elimination logic 😜 
 
 ### Dependencies
