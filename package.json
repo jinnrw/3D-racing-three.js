@@ -24,7 +24,7 @@
     "parcel-plugin-static-files-copy": "^2.5.0"
   },
   "dependencies": {
-    "three": "^0.123.0"
+    "three": "^0.137.0"
   },
   "staticFiles": {
     "staticPath": [
